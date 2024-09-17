@@ -1,9 +1,3 @@
-### Clone
-
-```
-   git clone https://bitbucket.org/product66/munitymetahorse.git
-```
-
 ### Install dependencies
 
 ```
