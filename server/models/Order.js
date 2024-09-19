@@ -17,7 +17,7 @@ const orderSchema = new mongoose.Schema({
         ref: "user",
         required: true
     },
-    orderID:{
+    orderID: {
         type: String,
         require: true
     },
@@ -33,9 +33,9 @@ const orderSchema = new mongoose.Schema({
     quantity: {
         type: Number
     },
-    soldBy:{
+    soldBy: {
         type: Schema.Types.ObjectId,
-        ref:"admin"
+        ref: "admin"
     },
     status: {
         currentStatus: {
@@ -61,11 +61,11 @@ const orderSchema = new mongoose.Schema({
             },
         },
         cancelledDetail: {
-            cancelledDate:{
+            cancelledDate: {
                 type: Date,
                 default: null
             },
-            cancelledBy:{
+            cancelledBy: {
                 type: Schema.Types.ObjectId,
                 refPath: "cancelledByModel"
             },
@@ -82,15 +82,6 @@ const orderSchema = new mongoose.Schema({
             type: Date,
             default: null
         },
-        // tobeReturnedDetail: {
-        //     tobereturnedDate: {
-        //         type: Date
-        //     },
-        //     remark: {
-        //         type: Schema.Types.ObjectId,
-        //         ref: 'remark'
-        //     },
-        // },        
         returnedDetail: {
             returnedDate: {
                 type: Date,
@@ -106,7 +97,7 @@ const orderSchema = new mongoose.Schema({
             }],
         },
     },
-    shipto:{
+    shipto: {
         region: {//pradesh
             type: String,
             trim: true,
@@ -132,7 +123,7 @@ const orderSchema = new mongoose.Schema({
             max: 9999999999,
         }
     },
-    isPaid:{
+    isPaid: {
         type: Boolean,
         default: false
     },
@@ -140,7 +131,7 @@ const orderSchema = new mongoose.Schema({
         type: String,
         enum: ['user', 'admin']
     },
-    productAttributes:{
+    productAttributes: {
         type: String
     }
 }, { timestamps: true });

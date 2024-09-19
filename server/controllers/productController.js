@@ -9,7 +9,6 @@ exports.getAllProducts = asyncErrorHandler(async (req, res, next) => {
 
     const resultPerPage = 12;
     const productsCount = await Product.countDocuments();
-    // console.log(req.query);
 
     const searchFeature = new SearchFeatures(Product.find(), req.query)
         .search()
@@ -230,7 +229,7 @@ exports.createProductReview = asyncErrorHandler(async (req, res, next) => {
 
     if (isReviewed) {
 
-        product.reviews.forEach((rev) => { 
+        product.reviews.forEach((rev) => {
             if (rev.user.toString() === req.user._id.toString())
                 (rev.rating = rating, rev.comment = comment);
         });

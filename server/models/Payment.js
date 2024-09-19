@@ -13,7 +13,7 @@ const paymentSchema = new mongoose.Schema({
     },
     method: {
         type: String,
-        enum: ['Cash on Delivery','manual']//manual ==> bank or manual esewa..
+        enum: ['Cash on Delivery', 'manual'] //manual ==> bank or manual esewa..
     },
     shippingCharge: {
         type: Number,
@@ -29,8 +29,8 @@ const paymentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    from:{
-        type:Number,
+    from: {
+        type: Number,
         max: 9999999999 //!esewa && receiverNumber
     },
     isDeleted: {

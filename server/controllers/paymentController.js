@@ -3,27 +3,7 @@ const asyncErrorHandler = require('../middlewares/helpers/asyncErrorHandler');
 const paytm = require('paytmchecksum');
 const https = require('https');
 const Payment = require('../models/paymentModel');
-const ErrorHandler = require('../utils/errorHandler');
 const { v4: uuidv4 } = require('uuid');
-
-// exports.processPayment = asyncErrorHandler(async (req, res, next) => {
-//     const myPayment = await stripe.paymentIntents.create({
-//         amount: req.body.amount,
-//         currency: "inr",
-//         metadata: {
-//             company: "AtEMkart",
-//         },
-//     });
-
-//     res.status(200).json({
-//         success: true,
-//         client_secret: myPayment.client_secret, 
-//     });
-// });
-
-// exports.sendStripeApiKey = asyncErrorHandler(async (req, res, next) => {
-//     res.status(200).json({ stripeApiKey: process.env.STRIPE_API_KEY });
-// });
 
 // Process Payment
 exports.processPayment = asyncErrorHandler(async (req, res, next) => {
@@ -40,7 +20,6 @@ exports.processPayment = asyncErrorHandler(async (req, res, next) => {
     params["ORDER_ID"] = "oid" + uuidv4();
     params["CUST_ID"] = process.env.PAYTM_CUST_ID;
     params["TXN_AMOUNT"] = JSON.stringify(amount);
-    // params["CALLBACK_URL"] = `${req.protocol}://${req.get("host")}/api/v1/callback`;
     params["CALLBACK_URL"] = `https://${req.get("host")}/api/v1/callback`;
     params["EMAIL"] = email;
     params["MOBILE_NO"] = phoneNo;
@@ -65,14 +44,11 @@ exports.processPayment = asyncErrorHandler(async (req, res, next) => {
 // Paytm Callback
 exports.paytmResponse = (req, res, next) => {
 
-    // console.log(req.body);
-
     let paytmChecksum = req.body.CHECKSUMHASH;
     delete req.body.CHECKSUMHASH;
 
     let isVerifySignature = paytm.verifySignature(req.body, process.env.PAYTM_MERCHANT_KEY, paytmChecksum);
     if (isVerifySignature) {
-        // console.log("Checksum Matched");
 
         var paytmParams = {};
 
@@ -113,10 +89,7 @@ exports.paytmResponse = (req, res, next) => {
 
                 post_res.on('end', function () {
                     let { body } = JSON.parse(response);
-                    // let status = body.resultInfo.resultStatus;
-                    // res.json(body);
                     addPayment(body);
-                    // res.redirect(`${req.protocol}://${req.get("host")}/order/${body.orderId}`)
                     res.redirect(`https://${req.get("host")}/order/${body.orderId}`)
                 });
             });
